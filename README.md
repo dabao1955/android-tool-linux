@@ -1,2 +1,2 @@
-# flash-tool-linux
-给各位linux机油写的刷机工具箱
+# flash-tool-linux update分支
+这里是用来塞新版本版本号的，没事不要随便克隆
