@@ -1,2 +1,2 @@
-# flash-tool-linux
-给各位linux机油写的刷机工具箱
+# flash-tool-linux setup
+安装脚本，直接执行即可，目前只支持ap包管理器
