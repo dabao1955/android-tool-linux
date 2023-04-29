@@ -83,7 +83,7 @@ clear
 echo 即将安装flash-tool-linux到/usr/share/flash-linux-tool
 read -s -n1 -p "按任意键继续 ... "
 echo 正在安装
-sudo git clone https://github.com/dabao1955/flash-tool-linux /usr/share >log.txt || echo 安装失败 ; exit 1 
+sudo git clone --recursive https://github.com/dabao1955/flash-tool-linux /usr/share >log.txt || echo 安装失败 ; exit 1 
 sudo ln -s /usr/share/flash-linux-tool/init /usr/local/bin/flash-tool-linux || echo 安装失败 ; exit 1 
 sudo ln -s /usr/share/flash-linux-tool/init /usr/local/bin/flt || echo 安装失败 ; exit 1 
 sudo chmod 755 /usr/local/bin/flash-linux-tool || echo 安装失败 ; exit 1 
