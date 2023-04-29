@@ -1,0 +1,26 @@
+#!/bin/bash
+clear
+echo linux刷机工具箱主菜单
+echo
+echo
+PS3='选择一项: '
+options=("fadtboot刷机工具" "adb刷机工具" "系统解包工具" "反馈&建议" "退出")
+select menu in "${options[@]}"; do
+case $menu in
+"fastboot刷机工具")
+            bash bin/fastboot/mainmenu
+            ;;
+"adb刷机工具")
+            bash bin/adb/mainmenu
+            ;;
+"系统解包工具")
+            bash bin/unpack/mainmenu
+            ;;
+"反馈&建议")
+            x-www-browser 'https://github.com/dabao1955/flash-tool-linux/issues'
+            ;;
+"退出")
+            exit 0
+            ;;
+esac
+done

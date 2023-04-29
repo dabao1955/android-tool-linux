@@ -1,0 +1,30 @@
+#!/bin/bash
+if [ $# -eq 0 ]; then
+  echo "需要更多选项，请输入flash-linux-tool help获取更多信息"
+  exit 1
+fi
+
+# get the first argument
+option=$1
+
+# perform different actions based on the option
+case $option in
+  help)
+echo flash linux tool help menu
+echo 一些选项
+echo help 获取帮助信息
+echo menu 打开菜单
+echo version 显示版本号
+    ;;
+  menu)
+bash ./bin/menu
+    ;;
+version)
+echo flash linux tool v0.0.1 alpha
+echo Copyright® 2023-2023 dabao1955
+    ;;
+  *)
+echo "无效选项，请输入flash-linux-tool help获取更多信息"
+    exit 1
+    ;;
+esac
