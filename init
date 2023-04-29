@@ -21,7 +21,7 @@ bash ./bin/menu
     ;;
 version)
 echo flash linux tool v0.0.1 alpha
-echo Copyright® 2023-2023 dabao1955
+echo Copyright (C) 2023-2023 dabao1955
     ;;
   *)
 echo "无效选项，请输入flash-linux-tool help获取更多信息"
