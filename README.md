@@ -11,6 +11,8 @@ aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.s
 - [x] adb刷入，提取，备份字库
 - [x] adb sideload
 - [ ] 支持多linux发行版(~~暂时只支持debian极其衍生linux发行版，可能以后也只支持这一种~~)
+- [x] system.new.dat(.br)转换system.img
+- [ ] super.img解包(以后支持)
 # 目前状态
 - [x] setup.sh
 - [x] 主菜单
@@ -23,3 +25,4 @@ aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.s
 - [ ] system转换
 - [ ] boot解包，打包
 - [x] 反馈页面
+- [ ] super.img解包
