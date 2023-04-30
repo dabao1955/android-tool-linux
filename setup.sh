@@ -80,10 +80,10 @@ fi
 
 echo 依赖安装完成
 clear
-echo 即将安装flash-tool-linux到/usr/share/flash-linux-tool
+echo 即将安装flash-tool-linux到/usr/share/flash-tool-linux
 read -s -n1 -p "按任意键继续 ... "
 echo 正在安装
-sudo git clone --recursive https://github.com/dabao1955/flash-tool-linux /usr/share >log.txt || echo 安装失败 ; exit 1 
+sudo git clone --recursive https://github.com/dabao1955/flash-tool-linux /usr/share/flash-tool-linux >log.txt || echo 安装失败 ; exit 1 
 sudo ln -s /usr/share/flash-tool-linux/init /usr/local/bin/flash-tool-linux || echo 安装失败 ; exit 1 
 sudo ln -s /usr/share/flash-tool/linux/init /usr/local/bin/ftl || echo 安装失败 ; exit 1 
 sudo chmod 755 /usr/local/bin/flash-tool-linux || echo 安装失败 ; exit 1 
