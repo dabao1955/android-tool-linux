@@ -17,7 +17,7 @@ aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.s
 - [x] setup.sh
 - [x] 主菜单
 - [ ] fastboot刷入
-- [P] adb 刷入
+- [x] adb 刷入(~~刷入boot还没完成~~)
 - [ ] adb 提取
 - [ ] 字库备份
 - [x] adb重启菜单
