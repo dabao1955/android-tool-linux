@@ -1,0 +1,30 @@
+#!/bin/bash
+clear
+echo adb 重启菜单
+echo
+echo
+PS3='选择一项: '
+options=("重启系统" "重启到recovery" "重启到fastboot" "重启到fastbootd" "重启到edl" "返回")
+select menu in "${options[@]}"; do
+case $menu in
+
+"重启系统")
+            adb reboot || echo 重启失败！ ; exit 1
+            ;;
+"重启到recovery")
+            adb reboot recovery || echo 重启失败！ ; exit 1
+            ;;
+"重启到fastboot")
+            adb reboot bootloader || echo 重启失败！ ; exit 1
+            ;;
+"重启到fastbootd")
+            adb reboot fastboot || echo 重启失败！ ; exit 1
+            ;;
+"重启到edl")
+            adb reboot edl || echo 重启失败！ ; exit 1
+            ;;
+"返回")
+           exit 0
+            ;;
+esac
+done
