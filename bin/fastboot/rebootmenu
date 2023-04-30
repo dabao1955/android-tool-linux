@@ -1,0 +1,30 @@
+#!/bin/bash
+clear
+echo fastboot 重启菜单
+echo
+echo
+PS3='选择一项: '
+options=("重启系统" "重启到recovery" "重启到fastboot" "重启到fastbootd" "重启到edl" "返回")
+select menu in "${options[@]}"; do
+case $menu in
+
+"重启系统")
+            fastboot reboot >/tmp/log.txt || echo 重启失败！ ; exit 1
+            ;;
+"重启到recovery")
+            fastboot reboot recovery >/tmp/log.txt || echo 重启失败！ ; exit 1
+            ;;
+"重启到fastboot")
+            fastboot reboot bootloader >/tmp/log.txt || echo 重启失败！ ; exit 1
+            ;;
+"重启到fastbootd")
+            fastboot reboot fastboot >/tmp/log.txt || echo 重启失败！ ; exit 1
+            ;;
+"重启到edl")
+            fastboot oem edl >/tmp/log.txt || echo 重启失败！ ; exit 1
+            ;;
+"返回")
+           exit 0
+            ;;
+esac
+done

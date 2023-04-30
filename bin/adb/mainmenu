@@ -1,0 +1,57 @@
+#!/bin/bash
+set +e
+if adb devices >/tmp/log.txt
+then
+clear
+mkdir -p -v $HOME/img_backup >/tmp/log.txt
+else
+echo 请链接手机，如果已连接请打开usb调试 ; exit 1
+fi
+echo adb刷机工具主菜单
+echo
+echo
+PS3='选择一项: '
+options=("提取boot" "刷入boot" "刷入recovery" "备份dtbo" "刷入dtbo" "重启菜单" "miui14开启自定义刷新率" "返回主菜单")
+select menu in "${options[@]}"; do
+case $menu in
+"提取boot")
+            if adb shell su -c ls /dev/block/by-name/boot >/tmp/log.txt
+            then
+            adb shell su -c dd if=/dev/block/by-name/boot of=/sdcard/boot.img >/tmp/log.txt && adb pull /sdcard/boot.img $HOME/img_backup >/tmp/log.txt && echo boot.img已备份到$HOME/img_backup目录中 || echo 备份失败 ; exit 1
+           elif adb shell su -c ls /dev/block/by-name/boot_a
+           then
+           adb shell su -c dd if=/dev/block/by-name/boot_a of=/sdcard/boot_a.img >/tmp/log.txt && adb pull /sdcard/boot_a.img $HOME/img_backup >/tmp/log.txt && adb shell su -c dd if=/dev/block/by-name/boot_b of=/sdcard/boot_b.img >/tmp/log.txt && adb pull /sdcard/boot_b.img $HOME/img_backup >/tmp/log.txt && echo boot已备份到$HOME/img_backup && echo 备份失败 ; exit 1
+           else
+           echo 不支持备份 ; exit 1
+            ;;
+"刷入boot")
+            bash bin/adb/mainmenu
+            ;;
+"备份dtbo")
+            if adb shell su -c ls /dev/block/by-name/dtbo >/tmp/log.txt
+            then
+            adb shell su -c dd if=/dev/block/by-name/dtbo of=/sdcard/dtbo.img >/tmp/log.txt && adb pull /sdcard/dtno.img $HOME/img_backup >/tmp/log.txt && echo dtbo.img已备份到$HOME/img_backup
+           else
+            echo 您的设备没有dtbo,不支持此操作 ; exit 1
+            fi
+            ;;
+"刷入dtbo")
+            if adb shell su -c ls /dev/block/by-name/dtbo >/tmp/log.txt
+            then
+            ls $HOME/img_backup/dtbo.img && adb push $HOME/img_backup/dtbo.img /sdcard >/tmp/log.txt && adb shell dd if=/sdcard/btbo.img of=/dev/block/by-name/dtbo >/tmp/log.txt && echo 刷入成功 || echo 刷入失败,可能是没有备份dtbo
+            adb shell ls /sdcard/dtbo.img >/tmp/log.txt && adb shell su -c dd if=/sdcard/dtbo.img of=/dev/block/by-name/dtbo >/tmp/log.txt && echo 刷入成功 || echo 刷入失败 ; exit 1
+            else 
+            echo 您的设备没有dtbo,不支持此操作 ; exit 1
+            fi
+            ;;
+"重启菜单")
+            bash rebootmenu
+            ;;
+"miui14开启自定义刷新率")
+            adb shell settings put system custom_mode_switch true || echo 开启失败 ; exit 1
+            ;;
+"返回主菜单")
+            exit 0
+            ;;
+esac
+done
