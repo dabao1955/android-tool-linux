@@ -4,7 +4,7 @@
 ```bash
 sudo apt update
 sudo apt install aria2 -y
-aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.sh | bash
+aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.sh && bash setup.sh
 ```
 # 功能
 - [x] fastboot线刷
