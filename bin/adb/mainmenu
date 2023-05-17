@@ -1,9 +1,9 @@
 #!/bin/bash
 set +e
-if adb devices >/tmp/log.txt
+if adb devices 
 then
 clear
-mkdir -p -v $HOME/img_backup >/tmp/log.txt
+mkdir -p -v $HOME/img_backup 
 else
 echo 请链接手机，如果已连接请打开usb调试 ; exit 1
 fi
@@ -15,31 +15,40 @@ options=("提取boot" "刷入boot" "刷入recovery" "备份dtbo" "刷入dtbo" "�
 select menu in "${options[@]}"; do
 case $menu in
 "提取boot")
-            if adb shell su -c ls /dev/block/by-name/boot >/tmp/log.txt
+            if adb shell su -c ls /dev/block/by-name/boot 
             then
-            adb shell su -c dd if=/dev/block/by-name/boot of=/sdcard/boot.img >/tmp/log.txt && adb pull /sdcard/boot.img $HOME/img_backup >/tmp/log.txt && echo boot.img已备份到$HOME/img_backup目录中 || echo 备份失败 ; exit 1
+            adb shell su -c dd if=/dev/block/by-name/boot of=/sdcard/boot.img  && adb pull /sdcard/boot.img $HOME/img_backup  && echo boot.img已备份到$HOME/img_backup目录中 || echo 备份失败 ; exit 1
            elif adb shell su -c ls /dev/block/by-name/boot_a
            then
-           adb shell su -c dd if=/dev/block/by-name/boot_a of=/sdcard/boot_a.img >/tmp/log.txt && adb pull /sdcard/boot_a.img $HOME/img_backup >/tmp/log.txt && adb shell su -c dd if=/dev/block/by-name/boot_b of=/sdcard/boot_b.img >/tmp/log.txt && adb pull /sdcard/boot_b.img $HOME/img_backup >/tmp/log.txt && echo boot已备份到$HOME/img_backup && echo 备份失败 ; exit 1
+           adb shell su -c dd if=/dev/block/by-name/boot_a of=/sdcard/boot_a.img  && adb pull /sdcard/boot_a.img $HOME/img_backup  && adb shell su -c dd if=/dev/block/by-name/boot_b of=/sdcard/boot_b.img  && adb pull /sdcard/boot_b.img $HOME/img_backup  && echo boot已备份到$HOME/img_backup && echo 备份失败 ; exit 1
            else
            echo 不支持备份 ; exit 1
+           fi
             ;;
 "刷入boot")
-            bash bin/adb/mainmenu
+            if adb shell su -c ls /dev/block/by-name/boot 
+            then
+            adb push $HOME/img_backup/boot.img /sdcard && adb shell su -c dd if=/sdcard/boot.img of=/dev/block/by-name/boot && read -s -n1 -p "按任意键重启 ... " && adb reboot || 刷入失败 ; exit 1
+            elif adb shell su -c ls /dev/block/by-name/boot_a
+            then
+            echo 暂不支持ab分区机型刷入boot ; exit 0
+            else
+            echo 不支持刷入 ; exit 1
+            fi
             ;;
 "备份dtbo")
-            if adb shell su -c ls /dev/block/by-name/dtbo >/tmp/log.txt
+            if adb shell su -c ls /dev/block/by-name/dtbo 
             then
-            adb shell su -c dd if=/dev/block/by-name/dtbo of=/sdcard/dtbo.img >/tmp/log.txt && adb pull /sdcard/dtno.img $HOME/img_backup >/tmp/log.txt && echo dtbo.img已备份到$HOME/img_backup
+            adb shell su -c dd if=/dev/block/by-name/dtbo of=/sdcard/dtbo.img  && adb pull /sdcard/dtno.img $HOME/img_backup  && echo dtbo.img已备份到$HOME/img_backup
            else
             echo 您的设备没有dtbo,不支持此操作 ; exit 1
             fi
             ;;
 "刷入dtbo")
-            if adb shell su -c ls /dev/block/by-name/dtbo >/tmp/log.txt
+            if adb shell su -c ls /dev/block/by-name/dtbo 
             then
-            ls $HOME/img_backup/dtbo.img && adb push $HOME/img_backup/dtbo.img /sdcard >/tmp/log.txt && adb shell dd if=/sdcard/btbo.img of=/dev/block/by-name/dtbo >/tmp/log.txt && echo 刷入成功 || echo 刷入失败,可能是没有备份dtbo
-            adb shell ls /sdcard/dtbo.img >/tmp/log.txt && adb shell su -c dd if=/sdcard/dtbo.img of=/dev/block/by-name/dtbo >/tmp/log.txt && echo 刷入成功 || echo 刷入失败 ; exit 1
+            ls $HOME/img_backup/dtbo.img && adb push $HOME/img_backup/dtbo.img /sdcard  && adb shell dd if=/sdcard/btbo.img of=/dev/block/by-name/dtbo  && echo 刷入成功 || echo 刷入失败,可能是没有备份dtbo
+            adb shell ls /sdcard/dtbo.img  && adb shell su -c dd if=/sdcard/dtbo.img of=/dev/block/by-name/dtbo  && echo 刷入成功 || echo 刷入失败 ; exit 1
             else 
             echo 您的设备没有dtbo,不支持此操作 ; exit 1
             fi

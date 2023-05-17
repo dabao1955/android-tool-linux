@@ -18,7 +18,7 @@ echo menu 打开菜单
 echo version 显示版本号
     ;;
   menu)
-bash ./bin/menu
+bash ./bin/menu >> /tmp/log.txt
     ;;
 log)
 tail -f /tmp/log.txt
