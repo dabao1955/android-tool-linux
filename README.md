@@ -4,7 +4,7 @@
 ```bash
 sudo apt update
 sudo apt install aria2 -y
-aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.sh | bash
+aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.sh && bash setup.sh
 ```
 # 功能
 - [x] fastboot线刷
@@ -17,8 +17,8 @@ aria2c https://raw.githubusercontent.com/dabao1955/flash-tool-linux/eula/setup.s
 - [x] setup.sh
 - [x] 主菜单
 - [ ] fastboot刷入
-- [P] adb 刷入
-- [ ] adb 提取
+- [x] adb 刷入(~~刷入boot还没完成~~)
+- [x] adb 提取
 - [ ] 字库备份
 - [x] adb重启菜单
 - [x] fadtboot重启菜单
